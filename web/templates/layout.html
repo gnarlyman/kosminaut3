@@ -1,0 +1,26 @@
+{{define "layout"}}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>kosminaut3 — ISS tracker</title>
+  <script src="/static/htmx.min.js"></script>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 { font-size: 1.3rem; margin-bottom: 1rem; }
+    h1 small { color: #888; font-weight: normal; }
+    #iss-view { border: 1px solid #ccc; padding: 1rem; border-radius: 6px; margin-top: 1rem; background: #fafafa; }
+    #iss-view.htmx-swapping { opacity: 0.5; transition: opacity 150ms; }
+    #iss-view p { margin: 0.25rem 0; }
+    form { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    form label { display: flex; gap: 0.25rem; align-items: center; }
+    button { padding: 0.3rem 0.7rem; cursor: pointer; }
+    .err { color: #b00; }
+    small { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>kosminaut3 <small>— live ISS position</small></h1>
+  {{template "content" .}}
+</body>
+</html>
+{{end}}

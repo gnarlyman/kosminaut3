@@ -1,0 +1,16 @@
+{{define "iss"}}<div id="iss-view"
+     {{if not .Paused}}hx-get="/iss?interval={{.IntervalSec}}" hx-trigger="every {{.IntervalSec}}s" hx-swap="outerHTML"{{end}}>
+  {{if .Err}}
+    <p class="err">ISS API error: {{.Err}}</p>
+    <p><em>Will retry on next tick.</em></p>
+  {{else if .Paused}}
+    <p><em>Paused — press Resume to continue polling.</em></p>
+  {{else}}
+    <p><strong>Lat:</strong> {{printf "%.4f" .Pos.Latitude}} &nbsp; <strong>Lon:</strong> {{printf "%.4f" .Pos.Longitude}}</p>
+    <p><strong>Velocity:</strong> {{printf "%.1f" .Pos.Velocity}} km/h</p>
+    <p><strong>Altitude:</strong> {{printf "%.1f" .Pos.Altitude}} km</p>
+    <p><strong>Visibility:</strong> {{.Pos.Visibility}}</p>
+  {{end}}
+  <small>{{if .Paused}}⏸ Polling stopped{{else if .Err}}Last attempt {{.UpdatedAt}}{{else}}Updated {{.UpdatedAt}} · every {{.IntervalSec}}s{{end}}</small>
+</div>
+{{end}}

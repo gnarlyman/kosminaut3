@@ -1,0 +1,22 @@
+{{define "content"}}
+<form hx-post="/controls" hx-target="#iss-view" hx-swap="outerHTML">
+  <label>Interval:
+    <select name="interval">
+      {{$sel := .IntervalSec}}
+      <option value="1" {{if eq $sel 1}}selected{{end}}>1s</option>
+      <option value="2" {{if eq $sel 2}}selected{{end}}>2s</option>
+      <option value="5" {{if eq $sel 5}}selected{{end}}>5s</option>
+      <option value="10" {{if eq $sel 10}}selected{{end}}>10s</option>
+    </select>
+  </label>
+  <button type="submit" name="paused" value="false">Resume</button>
+  <button type="submit" name="paused" value="true">Pause</button>
+</form>
+
+<div id="iss-view"
+     hx-get="/iss?interval={{.IntervalSec}}"
+     hx-trigger="load, every {{.IntervalSec}}s"
+     hx-swap="outerHTML">
+  <em>Loading ISS position…</em>
+</div>
+{{end}}
