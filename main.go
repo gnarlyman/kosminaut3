@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"kosminaut3/internal/anon"
 	"kosminaut3/internal/config"
 	"kosminaut3/internal/iss"
 	"kosminaut3/internal/server"
@@ -18,6 +19,15 @@ import (
 
 func main() {
 	cfg := config.Load()
+
+	httpClient, err := anon.NewClient(anon.Config{
+		ProxyURL:  cfg.ProxyURL,
+		UserAgent: cfg.UserAgent,
+		Timeout:   3 * time.Second,
+	})
+	if err != nil {
+		log.Fatalf("anon: %v", err)
+	}
 
 	sub, err := fs.Sub(webFS, "web")
 	if err != nil {
@@ -36,7 +46,7 @@ func main() {
 	srv := server.New(server.Deps{
 		Cfg:      cfg,
 		Renderer: renderer,
-		Client:   iss.NewClient(),
+		Client:   iss.NewClient(httpClient),
 		StaticFS: staticFS,
 	})
 

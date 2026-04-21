@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 )
 
 const endpoint = "https://api.wheretheiss.at/v1/satellites/25544"
@@ -14,10 +13,8 @@ type Client struct {
 	http *http.Client
 }
 
-func NewClient() *Client {
-	return &Client{
-		http: &http.Client{Timeout: 3 * time.Second},
-	}
+func NewClient(httpClient *http.Client) *Client {
+	return &Client{http: httpClient}
 }
 
 func (c *Client) Fetch(ctx context.Context) (Position, error) {

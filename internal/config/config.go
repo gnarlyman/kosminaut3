@@ -8,12 +8,16 @@ import (
 type Config struct {
 	Port           string
 	DefaultPollSec int
+	ProxyURL       string
+	UserAgent      string
 }
 
 func Load() Config {
 	return Config{
 		Port:           envOr("PORT", "8080"),
 		DefaultPollSec: envIntOr("POLL_DEFAULT_SEC", 2),
+		ProxyURL:       envOr("ANON_PROXY_URL", ""),
+		UserAgent:      envOr("ANON_USER_AGENT", ""),
 	}
 }
 
